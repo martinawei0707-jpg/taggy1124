@@ -502,3 +502,27 @@ body.admin-page {
 .admin-page .scroll {
     overflow: auto;
 }
+
+/* ========================================
+   製作團隊管理後台入口
+======================================== */
+
+.game-page .admin-entry {
+    position: fixed;
+    right: 15px;
+    bottom: 12px;
+    font-size: 12px;
+    color: #ded7ca;
+    text-decoration: none;
+    background: transparent;
+    padding: 6px 8px;
+    z-index: 100;
+    transition: color 0.2s ease;
+}
+
+/* 滑鼠移入時顯示 */
+
+.game-page .admin-entry:hover,
+.game-page .admin-entry:focus-visible {
+    color: #746653;
+}
