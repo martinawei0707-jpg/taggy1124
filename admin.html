@@ -1,61 +1,90 @@
-<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>標籤小人｜製作團隊管理</title><script src="config.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><link rel="stylesheet" href="./style.css"><body class="admin-page">
-  <h1>製作團隊管理後台</h1>
-  <p>Taggy v0.5.2 ｜企劃與製作：黃筱崴</p>
-  <a href="index.html">返回遊戲</a>
-  <p id="status" role="status"></p>
-  <section id="login"><form id="loginform">
-    <input id="email" type="email" placeholder="管理者電子郵件" required>
-    <input id="password" type="password" placeholder="密碼" required>
-    <button>登入</button></form></section>
-    <div id="panel" hidden>
-      <div class="tools">
-        <button id="logout">登出</button>
-        <label>起日 <input id="start" type="date"></label>
-        <label>迄日 <input id="end" type="date"></label>
-        <button id="today">今天</button>
-        <button id="all">全部日期</button>
-        <button id="refresh">查詢</button>
-
-      </div>
-      
-      <section><h2>收集統計（台灣時間）</h2>
-          <p id="summary"></p>
-          <p>輸入次數不等於參與人數。統計依原始輸入文字計算。</p>
-          
-          <div class="tools">
-            <button id="exportStats">匯出詞頻 CSV</button>
-            <button id="exportEvents">匯出原始紀錄 CSV</button>
-          </div>
-          
-          <div class="scroll" id="stats">
-          </div>
-
-      </section>
-      
-      <section>
-          <h2>共用標籤庫（累計）</h2>
-          <div class="tools">
-            <input id="search" placeholder="搜尋標籤">
-            <button id="exportLibrary">匯出標籤庫 CSV</button>
-          </div>
-          
-          <div class="scroll" id="library">
-          </div>
-      </section><section>
-          <h2>原始輸入紀錄</h2>
-          <div class="scroll" id="events">
-          </div>
-      
-      </section>
-        
-      <section>
-          <h2>遊玩回饋</h2>
-          <button id="exportFeedback">匯出回饋 CSV</button>
-          <div class="scroll" id="feedback"></div>
-      </section>
-    </div><script src="./admin.js">
-
+<!doctype html>
+<html lang="zh-Hant">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>標籤小人｜製作團隊管理</title>
+    <script src="config.js">
     </script>
-    
-  </body>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+    <link rel="stylesheet" href="./style.css">
+    <body class="admin-page">
+
+        <!-- 頁面標題與返回遊戲入口 -->
+        <h1>製作團隊管理後台</h1>
+        <p>Taggy v0.5.6 ｜企劃與製作：黃筱崴</p>
+        <a href="index.html">返回遊戲</a>
+        <p id="status" role="status">
+        </p>
+
+        <!-- 管理者登入 -->
+        <section id="login">
+            <form id="loginform">
+                <input id="email" type="email" placeholder="管理者電子郵件" required>
+                <input id="password" type="password" placeholder="密碼" required>
+                <button>登入</button>
+            </form>
+        </section>
+
+        <!-- 管理後台與日期查詢 -->
+        <div id="panel" hidden>
+            <div class="tools">
+                <button id="logout">登出</button>
+                <label>起日 <input id="start" type="date">
+                </label>
+                <label>迄日 <input id="end" type="date">
+                </label>
+                <button id="today">今天</button>
+                <button id="all">全部日期</button>
+                <button id="refresh">查詢</button>
+            </div>
+            <section>
+
+                <!-- 單日詞頻與原始紀錄匯出 -->
+                <h2>收集統計（台灣時間）</h2>
+                <p id="summary">
+                </p>
+                <p>輸入次數不等於參與人數。統計依原始輸入文字計算。</p>
+                <div class="tools">
+                    <button id="exportStats">匯出詞頻 CSV</button>
+                    <button id="exportEvents">匯出原始紀錄 CSV</button>
+                </div>
+                <div class="scroll" id="stats">
+                </div>
+            </section>
+            <section>
+
+                <!-- 預設及共用標籤管理 -->
+                <h2>前台標籤庫（預設與共用）</h2>
+                <p>預設標籤由團隊新增，不計入玩家輸入次數。隱藏或刪除會同步移出前台；取消預設後仍屬共用庫，可另行隱藏。</p>
+                <form id="defaultLabelForm" class="tools">
+                    <input id="defaultLabel" maxlength="24" required placeholder="新增前台預設標籤" aria-label="新增前台預設標籤">
+                    <button id="addDefaultLabel">＋ 新增預設標籤</button>
+                </form>
+                <div class="tools">
+                    <input id="search" placeholder="搜尋標籤">
+                    <button id="exportLibrary">匯出標籤庫 CSV</button>
+                </div>
+                <div class="scroll" id="library">
+                </div>
+            </section>
+            <section>
+
+                <!-- 原始輸入資料 -->
+                <h2>原始輸入紀錄</h2>
+                <div class="scroll" id="events">
+                </div>
+            </section>
+            <section>
+
+                <!-- 使用者回饋 -->
+                <h2>遊玩回饋</h2>
+                <button id="exportFeedback">匯出回饋 CSV</button>
+                <div class="scroll" id="feedback">
+                </div>
+            </section>
+        </div>
+        <script src="./admin.js">
+        </script>
+    </body>
 </html>
