@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Taggy v0.5.5</title>
+
+  <link rel="stylesheet" href="./style.css">
+  <body class="game-page">
+  <main>
+    <h1>Taggy</h1>
+    <div class="muted">每一個標籤，都可以掛上，也可以取下。</div>
+    <section id="welcome" aria-labelledby="welcomeTitle">
+      <h2 id="welcomeTitle">遊玩前的小約定</h2>
+      <p>歡迎來到「Taggy」！每一個你所輸入的標籤，都可能成為我們理解不同生命經驗與社會觀點的小小線索。</p>
+      <p>若你同意分享，你新增的標籤文字、輸入時間及次數將被保存，並納入共用標籤庫，供其他參與者使用。團隊也可能將這些資料用於未來遊戲更新、共融教育活動設計、文化行動計畫提案、成果紀錄、公開成果展示及倡議推廣。</p>
+      <p>為維護遊戲品質及友善的遊玩環境，製作團隊保有檢視、整理、修改、隱藏及刪除使用者輸入內容的權利。</p>
+      <p>是否分享由你決定。選擇僅遊玩，仍可使用完整遊戲功能，你新增的標籤不會上傳至共用標籤庫，AI 功能預設關閉。你也可以在遊戲中停止後續分享；先前已送出的資料不會因此自動刪除。</p>
+      <aside aria-label="AI 功能使用提醒" style="border:1px solid #c5b79c;border-radius:12px;padding:14px 16px;margin:16px 0;background:#fff9e9">
+        <strong>AI 功能使用提醒</strong>
+        <p>本遊戲部分功能會將使用者輸入的文字傳送至 AI 服務進行處理。請勿於本遊戲中透露真實姓名、聯絡方式或其他足以辨識自己或他人身分的資料。</p>
+      </aside>
+      <label><input id="consentCheck" type="checkbox">我已閱讀上述說明，並同意將新增的標籤提供給團隊作為上述用途。</label>
+      <button id="shareStart" class="primary" disabled>同意並開始遊戲</button>
+      <button id="privateStart">僅遊玩，不提供標籤資料</button>
+    </section>
+    <section id="board" hidden>
+      <div class="tools"><span id="consentStatus" class="muted" role="status"></span><button id="stopShare" hidden>停止後續分享</button><label><input id="aiToggle" type="checkbox">使用 AI 自我介紹（關閉則使用本機組句）</label><button id="openFeedback">遊玩回饋</button></div>
+      <div id="show" hidden>
+      </div>
+      <div id="workspace">
+        <div class="stage" id="stage">
+          <div class="floor">
+          </div>
+          <svg class="person" viewBox="0 0 280 300" aria-label="無五官圓潤小人">
+            <defs>
+              <linearGradient id="shade" x2=".8" y2="1">
+                <stop stop-color="white" stop-opacity=".28"/>
+                <stop offset="1" stop-color="#000" stop-opacity=".08"/>
+              </linearGradient>
+              <path id="bodypath" d="M112 125 C92 135 70 151 56 180 C45 201 43 219 57 224 C71 230 81 207 89 193 C81 220 82 246 89 263 C95 282 119 282 125 265 L140 239 L155 265 C161 282 185 282 191 263 C198 246 199 220 191 193 C199 207 209 230 223 224 C237 219 235 201 224 180 C210 151 188 135 168 125Z"/>
+            </defs>
+            <ellipse cx="140" cy="280" rx="76" ry="7" fill="#a9987c" opacity=".17"/>
+            <g id="skin" fill="#f8e39b" stroke="#ac9461" stroke-opacity=".45">
+              <use href="#bodypath"/>
+              <ellipse cx="140" cy="75" rx="63" ry="59"/>
+            </g>
+            <g fill="url(#shade)" pointer-events="none">
+              <use href="#bodypath"/>
+              <ellipse cx="140" cy="75" rx="63" ry="59"/>
+            </g>
+          </svg>
+          <div class="ruler">
+          </div>
+        </div>
+        <div class="tools">
+          <strong id="count" aria-live="polite">已掛上 0 個標籤</strong>
+          <button id="arrange">身上整理</button>
+          <button id="measure" class="primary">標籤尺整理</button>
+          <button id="reset">全部取下</button>
+          <button id="full">全螢幕</button>
+          <button id="debut">✦ 請開始你的自我介紹</button>
+        </div>
+        <div class="tools" id="colors">
+          <label>小人顏色 <input type="color" id="picker" value="#f8e39b">
+          </label>
+          <label>HEX <input id="hex" value="#F8E39B" maxlength="7">
+          </label>
+          <button id="defaultcolor">恢復奶油黃</button>
+        </div>
+        <div class="tools">
+          <label>色相<input type="range" id="h" min="0" max="359">
+          </label>
+          <label>飽和度<input type="range" id="s" min="0" max="100">
+          </label>
+          <label>明度<input type="range" id="l" min="0" max="100">
+          </label>
+          <span id="rgb" class="muted">
+          </span>
+        </div>
+        <h3>標籤區・共用標籤庫</h3>
+        <p class="muted">請勿輸入姓名或個人資料。標籤是否上傳，依你選擇的分享設定而定。</p>
+        <p id="libraryStatus" class="muted" role="status">正在準備標籤庫…</p>
+        <div class="tools"><button id="reloadLibrary">更新標籤庫</button></div>
+        <form id="addform" class="tools" novalidate>
+          <input id="newtag" maxlength="24" placeholder="輸入自訂標籤" aria-label="自訂標籤" autocomplete="off">
+          <button id="addTagButton" type="button">＋ 新增</button>
+        </form>
+        <p id="addStatus" role="status" aria-live="polite" style="min-height:1.5em;color:#655744;margin:4px 0"></p>
+        <div class="tray" id="tray"></div>
+        <p class="muted">拖曳或先點選吊牌，再點擊小人。雙擊取下；鍵盤 Enter 也可掛上或取下。僅同步自訂標籤文字，不上傳小人顏色、吊牌位置或自我介紹。</p>
+      </div>
+    </section>
+
+    <dialog id="feedbackDialog" aria-labelledby="feedbackTitle">
+      <h2 id="feedbackTitle">玩完之後，想聽聽你的聲音！</h2>
+      <p>沒有標準答案，每一種感受都值得被聽見。所有題目皆可跳過，填寫完全自願。</p>
+      <form id="feedbackForm">
+      <p class="muted">1＝非常不同意，2＝不同意，3＝普通，4＝同意，5＝非常同意。</p>
+<fieldset><legend>1. 我覺得這個遊戲有趣。</legend><div class="choices"><label><input type="radio" name="q1" value="1">1</label><label><input type="radio" name="q1" value="2">2</label><label><input type="radio" name="q1" value="3">3</label><label><input type="radio" name="q1" value="4">4</label><label><input type="radio" name="q1" value="5">5</label><label><input type="radio" name="q1" value="">略過</label></div></fieldset>
+<fieldset><legend>2. 我覺得這個遊戲容易操作。</legend><div class="choices"><label><input type="radio" name="q2" value="1">1</label><label><input type="radio" name="q2" value="2">2</label><label><input type="radio" name="q2" value="3">3</label><label><input type="radio" name="q2" value="4">4</label><label><input type="radio" name="q2" value="5">5</label><label><input type="radio" name="q2" value="">略過</label></div></fieldset>
+<fieldset><legend>3. 這個遊戲讓我重新思考標籤與人的關係。</legend><div class="choices"><label><input type="radio" name="q3" value="1">1</label><label><input type="radio" name="q3" value="2">2</label><label><input type="radio" name="q3" value="3">3</label><label><input type="radio" name="q3" value="4">4</label><label><input type="radio" name="q3" value="5">5</label><label><input type="radio" name="q3" value="">略過</label></div></fieldset>
+<fieldset><legend>4. 這個遊戲讓我更願意理解與自己不同的人。</legend><div class="choices"><label><input type="radio" name="q4" value="1">1</label><label><input type="radio" name="q4" value="2">2</label><label><input type="radio" name="q4" value="3">3</label><label><input type="radio" name="q4" value="4">4</label><label><input type="radio" name="q4" value="5">5</label><label><input type="radio" name="q4" value="">略過</label></div></fieldset>
+<fieldset><legend>5. 看見小人穿著標籤服裝、介紹自己時，你有什麼感受？（可複選）</legend><div class="choices"><label><input type="checkbox" name="feeling" value="有趣">有趣</label><label><input type="checkbox" name="feeling" value="驚訝">驚訝</label><label><input type="checkbox" name="feeling" value="開心">開心</label><label><input type="checkbox" name="feeling" value="感動">感動</label><label><input type="checkbox" name="feeling" value="困惑">困惑</label><label><input type="checkbox" name="feeling" value="不舒服">不舒服</label><label><input type="checkbox" name="feeling" value="有點難過">有點難過</label><label><input type="checkbox" name="feeling" value="沒有特別感覺">沒有特別感覺</label><label><input type="checkbox" name="feeling" value="其他">其他</label></div><label for="otherFeeling">其他感受（選填）</label><textarea id="otherFeeling" maxlength="200"></textarea></fieldset><label for="thought">6. 玩完這個遊戲，你對「標籤」有什麼新的想法？</label><textarea id="thought" maxlength="1000" placeholder="想說什麼都可以……"></textarea>
+<label for="suggestion">7. 你希望這個遊戲未來增加什麼功能？</label><textarea id="suggestion" maxlength="1000" placeholder="歡迎提供任何建議……"></textarea>
+<p class="muted">回饋文字、評分、感受與送出時間將保存，僅供團隊查閱，作為遊戲更新、共融教育、文化行動計畫提案及成果分享之用；成果可能以統計或不具識別性的摘錄呈現。請勿填寫姓名、聯絡方式或其他個人資料。回饋與標籤分享分別取得同意，不填寫也能完整遊玩。</p>
+<label><input id="feedbackConsent" type="checkbox">我已閱讀並同意上述回饋資料用途。</label>
+<div class="tools"><button id="sendFeedback" class="primary" type="submit" disabled>送出我的回饋</button><button id="closeFeedback" type="button">返回遊戲</button></div>
+<p id="feedbackStatus" role="status"></p></form></dialog>
+  <footer style="text-align:center;padding:20px;font-size:14px;color:#746653">企劃與製作｜黃筱崴 · Version 0.5.5</footer></main>
+  <script src="./game.js"></script>
+</body>
+</html>

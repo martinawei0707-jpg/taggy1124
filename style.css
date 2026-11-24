@@ -1,0 +1,504 @@
+/* Taggy v0.5.5｜共用樣式表 */
+
+/* 全站共用設定 */
+* {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* 遊戲前台 */
+body.game-page {
+    margin: 0;
+    background: #faf8f2;
+    color: #514536;
+    font: 16px system-ui,sans-serif;
+}
+
+.game-page main {
+    max-width: 1050px;
+    margin: auto;
+    padding: 20px;
+}
+
+.game-page h1 {
+    margin: 0 0 8px;
+}
+
+.game-page button,
+.game-page input {
+    font: inherit;
+    padding: 10px;
+    border: 1px solid #b8aa90;
+    border-radius: 9px;
+    background: #fffdf7;
+    color: inherit;
+}
+
+.game-page button {
+    cursor: pointer;
+}
+
+.game-page button:focus-visible,
+.game-page input:focus-visible {
+    outline: 3px solid #825b16;
+}
+
+.game-page nav,
+.game-page .tools,
+.game-page .tray {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+}
+
+.game-page .stage {
+    position: relative;
+    background: #f2eee4;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 660px;
+    touch-action: pan-y;
+}
+
+.game-page .person {
+    position: absolute;
+    bottom: 34px;
+    width: 420px;
+    max-width: 96%;
+    height: 450px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@media (max-width: 480px) {
+    .game-page .stage {
+        height: 560px;
+    }
+}
+
+.game-page .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: #fffdf6;
+    border: 1px solid #c5b79c;
+    border-radius: 4px 9px 9px 4px;
+    box-shadow: 1px 2px 4px #0002;
+    padding: 8px 12px;
+    touch-action: none;
+    cursor: grab;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.game-page .tag:before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border: 1px solid #aa9879;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.game-page .hung {
+    position: absolute;
+    z-index: 3;
+    transition: left .25s,bottom .25s,transform .25s;
+}
+
+.game-page .hung:after {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: -3px;
+    height: 7px;
+    border-left: 1px solid #ae9b7655;
+}
+
+.game-page .selected {
+    outline: 3px solid #b49345;
+}
+
+.game-page .ruler {
+    position: absolute;
+    border-left: 1px solid #ad9b7b;
+    display: none;
+    width: 8px;
+}
+
+.game-page .tick {
+    position: absolute;
+    left: 0;
+    border-top: 1px solid #ad9b7b;
+    width: 8px;
+}
+
+.game-page .tick span {
+    position: absolute;
+    right: 12px;
+    top: -9px;
+    font-size: 12px;
+}
+
+.game-page .floor {
+    position: absolute;
+    border-top: 1px dashed #c5b79b;
+    display: none;
+}
+
+.game-page .swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.game-page .muted {
+    font-size: 14px;
+    color: #746653;
+}
+
+.game-page .primary {
+    background: #eadbb0;
+}
+
+.game-page #pending {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.game-page #pending>div {
+    border: 1px solid #c5b79c;
+    padding: 8px;
+    border-radius: 8px;
+    background: white;
+}
+
+.game-page label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.game-page input[type=range] {
+    padding: 0;
+    max-width: 130px;
+}
+
+.game-page #hex {
+    width: 110px;
+}
+
+.game-page #newtag {
+    flex: 1;
+    min-width: 140px;
+}
+
+.game-page .ghost {
+    position: fixed !important;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: .9;
+}
+
+.game-page .active {
+    background: #eadbb0;
+}
+
+@media (prefers-reduced-motion:reduce) {
+    .game-page * {
+        transition: none !important;
+    }
+}
+
+.game-page #debut {
+    background: #eadbb0;
+    font-weight: 700;
+    padding: 13px 22px;
+}
+
+.game-page #show {
+    background: radial-gradient(ellipse at 35% 60%,#735784,#30203f 58%,#181124);
+    border-radius: 20px;
+    overflow: hidden;
+    color: #fff7da;
+    position: relative;
+    animation: dark .8s both;
+}
+
+.game-page #show svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.game-page #show .beam {
+    animation: appear 1.1s .65s both;
+}
+
+.game-page #show .staractor {
+    animation: arrival 1s 1.45s both;
+    transform-origin: 160px 340px;
+}
+
+.game-page #show .spark {
+    animation: appear .8s 1.7s both;
+}
+
+.game-page #show .speech {
+    animation: arrival .7s 2.5s both;
+    background: #fffaf0;
+    color: #493952;
+    border-radius: 18px;
+    padding: 20px;
+    line-height: 1.8;
+    position: relative;
+    overflow-wrap: anywhere;
+    font-size: clamp(16px,2.2vw,23px);
+}
+
+.game-page #show .speech:before {
+    content: "";
+    position: absolute;
+    left: -17px;
+    top: 42px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 18px solid #fffaf0;
+}
+
+.game-page .showgrid {
+    display: grid;
+    grid-template-columns: minmax(0,3fr) minmax(0,1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 20px 24px 20px 8px;
+}
+
+.game-page .showfooter {
+    padding: 0 20px 20px;
+    text-align: center;
+}
+
+.game-page .showfooter button {
+    color: #493952;
+    background: #fff4d6;
+}
+
+@keyframes dark {
+    from {
+        opacity: .25;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes arrival {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (max-width:480px) {
+    .game-page .showgrid {
+        padding: 10px 12px 15px 2px;
+        gap: 5px;
+        grid-template-columns: minmax(0, 60fr) minmax(0, 40fr);
+    }
+
+    .game-page #show .speech {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .game-page #show .speech:before {
+        left: -9px;
+        border-right-width: 10px;
+    }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    .game-page #show * {
+        animation: none !important;
+    }
+}
+
+.game-page #welcome {
+    max-width: 650px;
+    margin: 28px auto;
+    padding: 28px;
+    background: #fffdf6;
+    border: 1px solid #d7cbb2;
+    border-radius: 20px;
+    line-height: 1.8;
+}
+
+.game-page #welcome h2 {
+    margin-top: 0;
+}
+
+.game-page #welcome label {
+    display: flex;
+    align-items: flex-start;
+    margin: 20px 0;
+}
+
+.game-page #welcome input[type=checkbox] {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.game-page #welcome button {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.game-page #welcome button:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.game-page #feedbackDialog {
+    width: min(680px,94vw);
+    max-height: 90vh;
+    overflow: auto;
+    border: 1px solid #c5b79c;
+    border-radius: 18px;
+    padding: 24px;
+    background: #fffdf7;
+    color: #514536;
+}
+
+.game-page #feedbackDialog::backdrop {
+    background: #30213f99;
+}
+
+.game-page #feedbackDialog fieldset {
+    border: 0;
+    border-bottom: 1px solid #e3d9c5;
+    margin: 0 0 16px;
+    padding: 0 0 16px;
+}
+
+.game-page #feedbackDialog legend {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.game-page #feedbackDialog .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.game-page #feedbackDialog textarea {
+    display: block;
+    width: 100%;
+    min-height: 90px;
+    padding: 10px;
+    border: 1px solid #b8aa90;
+    border-radius: 8px;
+    font: inherit;
+    margin: 8px 0 18px;
+}
+
+.game-page #feedbackDialog input[type=radio],
+.game-page #feedbackDialog input[type=checkbox] {
+    width: 18px;
+    height: 18px;
+    accent-color: #826225;
+}
+
+.game-page #feedbackDialog button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* 製作團隊管理後台 */
+body.admin-page {
+    font: 16px system-ui;
+    background: #faf8f2;
+    color: #514536;
+    margin: auto;
+    max-width: 1200px;
+    padding: 24px;
+}
+
+.admin-page button,
+.admin-page input,
+.admin-page select {
+    font: inherit;
+    padding: 9px;
+    border: 1px solid #b8aa90;
+    border-radius: 8px;
+    background: white;
+    color: inherit;
+}
+
+.admin-page button {
+    cursor: pointer;
+}
+
+.admin-page section {
+    background: white;
+    padding: 18px;
+    border-radius: 14px;
+    margin: 16px 0;
+}
+
+.admin-page form,
+.admin-page .tools {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.admin-page table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+}
+
+.admin-page th,
+.admin-page td {
+    padding: 9px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    vertical-align: top;
+    overflow-wrap: anywhere;
+}
+
+.admin-page td button {
+    margin: 2px;
+    font-size: 13px;
+}
+
+.admin-page .scroll {
+    overflow: auto;
+}
