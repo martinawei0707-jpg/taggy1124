@@ -1,1 +1,1 @@
-window.TAG_CONFIG = { url: 'https://YOUR_PROJECT.supabase.co', key: 'YOUR_PUBLISHABLE_KEY' };
+window.TAG_CONFIG = { url: 'https://yggwvfszckolgroxuhzk.supabase.co/rest/v1/', key: 'sb_publishable_5A0a2UV2NoceFIg1zUijrA_WMXFUwHf' };
